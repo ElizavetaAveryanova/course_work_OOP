@@ -9,11 +9,17 @@ class Vacancy:
         :param employer: работодатель
         :param area: город
         """
-        self.title: str = title
-        self.url: str = url
-        self.salary: int = salary
-        self.employer: str = employer
-        self.area: str = area
+        # self.title: str = title
+        # self.url: str = url
+        # self.salary: int = salary
+        # self.employer: str = employer
+        # self.area: str = area
+
+        self.title: str = title if self._is_valid_title(title) else "Без названия"
+        self.url: str = url if self._is_valid_url(url) else "Без url"
+        self.salary: int = salary if self._is_valid_salary(salary) else 0
+        self.employer: str = employer if self._is_valid_employer(employer) else "Без информации по работодателю"
+        self.area: str = area if self._is_valid_area(area) else "Без информации по городу"
 
     def __repr__(self) -> str:
         """ Возвращает информацию об объекте (атрибуты экземпляра) """
@@ -48,20 +54,20 @@ class Vacancy:
         """Проверка названия города """
         return len(employer) > 0 and isinstance(employer, str)
 
-    def __setattr__(self, key, value):
-        """
-        Проверка при установке значений атрибутов объектов.
-        Если значение атрибута не является исключением, то выполняется установка значений
-        """
-        if key == "title" and not self._is_valid_title(value):
-            raise Exception("Название вакансии не может быть пустым и должно быть строкой")
-        if key == "url" and not self._is_valid_url(value):
-            raise Exception("Ссылка на вакансию должна быть строкой и начинаться с 'https://'")
-        if key == "salary" and not self._is_valid_salary(value):
-            raise Exception("Зарплата должна быть числом")
-        if key == "employer" and not self._is_valid_employer(value):
-            raise Exception("Название работодателя не может быть пустым и должно быть строкой")
-        super().__setattr__(key, value)
+    # def __setattr__(self, key, value):
+    #     """
+    #     Проверка при установке значений атрибутов объектов.
+    #     Если значение атрибута не является исключением, то выполняется установка значений
+    #     """
+    #     if key == "title" and not self._is_valid_title(value):
+    #         raise Exception("Название вакансии не может быть пустым и должно быть строкой")
+    #     if key == "url" and not self._is_valid_url(value):
+    #         raise Exception("Ссылка на вакансию должна быть строкой и начинаться с 'https://'")
+    #     if key == "salary" and not self._is_valid_salary(value):
+    #         raise Exception("Зарплата должна быть числом")
+    #     if key == "employer" and not self._is_valid_employer(value):
+    #         raise Exception("Название работодателя не может быть пустым и должно быть строкой")
+    #     super().__setattr__(key, value)
 
     def __gt__(self, other) -> bool:
         """Возвращает результат сравнения(>) зарплаты двух вакансий  """
